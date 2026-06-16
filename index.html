@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aeroshot — Drone Photography & Inspections</title>
+<meta name="description" content="Professional drone services for real estate flyovers and residential property inspections across Melbourne and Victoria.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:       #0d1f3c;
+    --navy-mid:   #1a3560;
+    --navy-light: #2a4a7f;
+    --sky:        #4a90d9;
+    --sky-pale:   #e8f1fb;
+    --white:      #ffffff;
+    --off-white:  #f7f9fc;
+    --text:       #0d1f3c;
+    --mid:        #4a5568;
+    --light:      #8fa3bc;
+    --border:     #dce6f0;
+    --gold:       #c9a84c;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 68px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px; color: var(--navy); text-decoration: none;
+  }
+  .nav-logo .logo-mark {
+    width: 32px; height: 32px;
+    background: var(--navy);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-logo .logo-mark svg { width: 18px; height: 18px; fill: white; }
+  .nav-links { display: flex; align-items: center; gap: 2rem; }
+  .nav-links a { font-size: 14px; color: var(--mid); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-cta {
+    background: var(--navy); color: white;
+    padding: 0.55rem 1.25rem; border-radius: 8px;
+    font-size: 14px; font-weight: 600; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--navy-light); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 5vw 7vh;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(74,144,217,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,144,217,0.07) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(74,144,217,0.18) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
+  .hero-altitude {
+    position: absolute; top: 88px; right: 5vw;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    display: flex; flex-direction: column; gap: 4px; text-align: right;
+  }
+  .hero-altitude span { display: block; }
+  .hero-altitude .alt-val { font-size: 28px; color: rgba(74,144,217,0.7); font-weight: 500; }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em;
+    color: var(--sky); text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(42px, 7vw, 88px);
+    color: white; line-height: 1.02;
+    max-width: 780px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--sky); }
+  .hero-sub {
+    font-size: 17px; color: rgba(255,255,255,0.6);
+    max-width: 480px; line-height: 1.65;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--sky); color: white;
+    padding: 0.85rem 1.75rem; border-radius: 9px;
+    font-size: 15px; font-weight: 600; text-decoration: none;
+    border: none; cursor: pointer; transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #3a7fc9; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: rgba(255,255,255,0.8);
+    padding: 0.85rem 1.75rem; border-radius: 9px;
+    font-size: 15px; font-weight: 500; text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2); cursor: pointer;
+    transition: border-color 0.2s, color 0.2s; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.5); color: white; }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .hero-stat-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px; color: white; display: block;
+  }
+  .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+  /* ── SECTION DEFAULTS ── */
+  section { padding: 7rem 5vw; }
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--sky); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(30px, 4vw, 50px);
+    color: var(--navy); line-height: 1.1; margin-bottom: 1rem;
+  }
+  .section-sub {
+    font-size: 16px; color: var(--mid); line-height: 1.7;
+    max-width: 520px;
+  }
+
+  /* ── SERVICES ── */
+  .services { background: var(--off-white); }
+  .services-header { max-width: 560px; margin-bottom: 3.5rem; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .service-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: box-shadow 0.25s, transform 0.2s;
+  }
+  .service-card:hover { box-shadow: 0 8px 32px rgba(13,31,60,0.1); transform: translateY(-3px); }
+  .service-icon {
+    width: 48px; height: 48px;
+    background: var(--sky-pale);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .service-icon svg { width: 24px; height: 24px; stroke: var(--sky); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .service-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px; color: var(--navy);
+    margin-bottom: 0.6rem;
+  }
+  .service-card p { font-size: 14px; color: var(--mid); line-height: 1.65; margin-bottom: 1.25rem; }
+  .service-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.08em;
+    color: var(--sky); background: var(--sky-pale);
+    padding: 3px 10px; border-radius: 20px;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how { background: white; }
+  .how-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .how-steps { display: flex; flex-direction: column; gap: 2rem; }
+  .how-step { display: flex; gap: 1.25rem; }
+  .step-num {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    background: var(--navy); color: white;
+    border-radius: 50%;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-body h4 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem; }
+  .step-body p { font-size: 14px; color: var(--mid); line-height: 1.65; }
+  .how-visual {
+    background: var(--navy);
+    border-radius: 20px;
+    aspect-ratio: 4/3;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2rem;
+    position: relative; overflow: hidden;
+  }
+  .how-visual-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(74,144,217,0.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,144,217,0.12) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .drone-svg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); opacity: 0.9; }
+  .flight-path {
+    position: absolute; top: 50%; left: 10%; right: 10%;
+    height: 1px; background: rgba(74,144,217,0.3);
+  }
+  .flight-path::after {
+    content: '';
+    position: absolute; right: 0; top: -3px;
+    width: 7px; height: 7px;
+    background: var(--sky); border-radius: 50%;
+  }
+  .how-telemetry {
+    position: relative; z-index: 2;
+    display: flex; gap: 1.5rem;
+  }
+  .telem-item { }
+  .telem-val { font-family: 'DM Mono', monospace; font-size: 18px; color: white; font-weight: 500; }
+  .telem-label { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; margin-top: 2px; }
+
+  /* ── PRICING ── */
+  .pricing { background: var(--off-white); }
+  .pricing-header { max-width: 560px; margin-bottom: 3rem; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+  .price-card {
+    background: white; border: 1px solid var(--border);
+    border-radius: 16px; padding: 2rem;
+    transition: box-shadow 0.2s;
+  }
+  .price-card:hover { box-shadow: 0 6px 24px rgba(13,31,60,0.08); }
+  .price-card.featured {
+    background: var(--navy); border-color: var(--navy);
+  }
+  .price-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px;
+    background: var(--sky-pale); color: var(--sky);
+    margin-bottom: 1rem;
+  }
+  .price-card.featured .price-badge { background: rgba(74,144,217,0.2); color: var(--sky); }
+  .price-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px; color: var(--navy); margin-bottom: 0.5rem;
+  }
+  .price-card.featured h3 { color: white; }
+  .price-amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 40px; color: var(--navy); margin-bottom: 0.25rem;
+  }
+  .price-card.featured .price-amount { color: white; }
+  .price-note { font-size: 13px; color: var(--light); margin-bottom: 1.5rem; }
+  .price-card.featured .price-note { color: rgba(255,255,255,0.45); }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.75rem; }
+  .price-features li { display: flex; gap: 0.6rem; font-size: 14px; color: var(--mid); align-items: flex-start; }
+  .price-card.featured .price-features li { color: rgba(255,255,255,0.75); }
+  .price-features li::before { content: '✓'; color: var(--sky); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .price-btn {
+    display: block; width: 100%; padding: 0.75rem;
+    border-radius: 9px; text-align: center;
+    font-size: 14px; font-weight: 600; text-decoration: none;
+    border: none; cursor: pointer; transition: all 0.2s;
+    background: var(--sky-pale); color: var(--navy);
+  }
+  .price-btn:hover { background: var(--sky); color: white; }
+  .price-card.featured .price-btn { background: var(--sky); color: white; }
+  .price-card.featured .price-btn:hover { background: #3a7fc9; }
+
+  /* ── BOOKING FORM ── */
+  .booking { background: white; }
+  .booking-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; }
+  .booking-info h2 { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 3.5vw, 44px); color: var(--navy); line-height: 1.15; margin-bottom: 1rem; }
+  .booking-info p { font-size: 15px; color: var(--mid); line-height: 1.7; margin-bottom: 2rem; }
+  .contact-detail { display: flex; align-items: center; gap: 0.75rem; font-size: 14px; color: var(--mid); margin-bottom: 0.75rem; }
+  .contact-detail svg { width: 16px; height: 16px; stroke: var(--sky); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+  .booking-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 12px; font-weight: 600; color: var(--navy); letter-spacing: 0.04em; }
+  .form-input, .form-select, .form-textarea {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border); border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; color: var(--text);
+    background: var(--off-white);
+    outline: none; transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--sky); background: white;
+  }
+  .form-textarea { resize: vertical; min-height: 110px; }
+  .form-submit {
+    background: var(--navy); color: white;
+    padding: 0.9rem 2rem; border-radius: 9px;
+    font-size: 15px; font-weight: 600;
+    border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: var(--navy-light); transform: translateY(-1px); }
+  .form-note { font-size: 12px; color: var(--light); margin-top: 0.25rem; }
+  .form-success {
+    display: none; padding: 1.5rem; border-radius: 12px;
+    background: #edfaf3; border: 1px solid #a3e6c3;
+    text-align: center; color: #1a6640; font-size: 15px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); color: rgba(255,255,255,0.55);
+    padding: 3rem 5vw;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px; color: white; text-decoration: none;
+  }
+  footer p { font-size: 13px; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: white; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .how-inner, .booking-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .hero-altitude { display: none; }
+    section { padding: 5rem 5vw; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z"/>
+        <circle cx="12" cy="20" r="2"/>
+        <line x1="12" y1="15" x2="12" y2="18" stroke="white" stroke-width="1.5"/>
+      </svg>
+    </div>
+    Aeroshot
+  </a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#book" class="nav-cta">Book now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-altitude">
+    <span class="alt-val">120m</span>
+    <span>MAX ALTITUDE</span>
+    
+    <span style="color:rgba(74,144,217,0.7);">✓ COMPLIANT</span>
+  </div>
+
+  <div class="hero-eyebrow">Melbourne & Victoria — Licensed Drone Services</div>
+  <h1>Every property looks better <em>from above</em></h1>
+  <p class="hero-sub">Professional drone photography, real estate flyovers and residential inspection services — delivered fast, fully insured.</p>
+  <div class="hero-actions">
+    <a href="#book" class="btn-primary">Book a flight</a>
+    <a href="#services" class="btn-ghost">View services</a>
+  </div>
+
+  <div class="hero-stats">
+    <div>
+      <span class="hero-stat-val">500+</span>
+      <span class="hero-stat-label">Properties flown</span>
+    </div>
+    <div>
+      <span class="hero-stat-val">48hr</span>
+      <span class="hero-stat-label">Turnaround</span>
+    </div>
+    <div>
+      <span class="hero-stat-val">$20M</span>
+      <span class="hero-stat-label">Public liability</span>
+    </div>
+    <div>
+      <span class="hero-stat-val">4K</span>
+      <span class="hero-stat-label">Video resolution</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <p class="section-eyebrow">What we do</p>
+    <h2 class="section-title">Two services, one operator</h2>
+    <p class="section-sub">Whether you're listing a property or need a detailed roof and guttering assessment, we have a tailored package ready to go.</p>
+  </div>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <h3>Real Estate Flyovers</h3>
+      <p>Cinematic aerial footage and stills that showcase your listing's land size, streetscape, and surroundings. Edited and ready for your agent within 48 hours.</p>
+      <span class="service-tag">Photography + Video</span>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+      </div>
+      <h3>Residential Inspections</h3>
+      <p>Close-up roof, guttering, fascia, and solar panel assessment — without scaffolding. Full written report with annotated images included.</p>
+      <span class="service-tag">Inspection + Report</span>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+      </div>
+      <h3>Virtual Property Tours</h3>
+      <p>Smooth 360° aerial sweeps combined with ground-level footage for immersive online listings that hold buyer attention longer.</p>
+      <span class="service-tag">Video Production</span>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </div>
+      <h3>Progress Documentation</h3>
+      <p>Regular aerial updates for construction sites, subdivisions, and renovations — with time-lapse packages available for project timelines.</p>
+      <span class="service-tag">Construction + Development</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div>
+      <p class="section-eyebrow">The process</p>
+      <h2 class="section-title">From booking to delivery in 3 steps</h2>
+      <div class="how-steps" style="margin-top:2.5rem;">
+        <div class="how-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Submit your enquiry</h4>
+            <p>Tell us your property address, service type, and preferred date. We'll confirm availability and any site-specific airspace requirements within a few hours.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>We fly the property</h4>
+            <p>Our licensed pilot arrives on the day and captures everything on the brief — typically 30–60 minutes on site. Fully insured, zero disruption.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Receive edited files</h4>
+            <p>Edited photos, video, or your inspection report delivered via a private download link within 48 hours of the flight. Ready to use immediately.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-visual">
+      <div class="how-visual-grid"></div>
+      <div class="flight-path"></div>
+
+      <!-- Drone illustration -->
+      <div class="drone-svg">
+        <svg width="140" height="80" viewBox="0 0 140 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Arms -->
+          <line x1="70" y1="40" x2="20" y2="20" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+          <line x1="70" y1="40" x2="120" y2="20" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+          <line x1="70" y1="40" x2="20" y2="60" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+          <line x1="70" y1="40" x2="120" y2="60" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+          <!-- Rotors -->
+          <ellipse cx="20" cy="20" rx="16" ry="5" stroke="#4a90d9" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <ellipse cx="120" cy="20" rx="16" ry="5" stroke="#4a90d9" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <ellipse cx="20" cy="60" rx="16" ry="5" stroke="#4a90d9" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <ellipse cx="120" cy="60" rx="16" ry="5" stroke="#4a90d9" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <!-- Body -->
+          <rect x="58" y="32" width="24" height="16" rx="4" fill="white" opacity="0.9"/>
+          <!-- Camera -->
+          <circle cx="70" cy="52" r="5" fill="none" stroke="#4a90d9" stroke-width="1.5"/>
+          <circle cx="70" cy="52" r="2" fill="#4a90d9" opacity="0.6"/>
+        </svg>
+      </div>
+
+      <div class="how-telemetry" style="position:relative;z-index:2;">
+        <div class="telem-item">
+          <div class="telem-val">4K/60</div>
+          <div class="telem-label">VIDEO</div>
+        </div>
+        <div class="telem-item">
+          <div class="telem-val">48MP</div>
+          <div class="telem-label">STILLS</div>
+        </div>
+        <div class="telem-item">
+          <div class="telem-val">28min</div>
+          <div class="telem-label">FLIGHT TIME</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-header">
+    <p class="section-eyebrow">Pricing</p>
+    <h2 class="section-title">Straightforward packages</h2>
+    <p class="section-sub">No hidden fees. Travel included within 50km of Melbourne CBD. Custom quotes available for larger sites or ongoing contracts.</p>
+  </div>
+  <div class="pricing-grid">
+
+    <div class="price-card">
+      <span class="price-badge">Real Estate</span>
+      <h3>Flyover</h3>
+      <div class="price-amount">$349</div>
+      <p class="price-note">Per property</p>
+      <ul class="price-features">
+        <li>Up to 20 edited aerial photos</li>
+        <li>2-minute cinematic video</li>
+        <li>48-hour delivery</li>
+        <li>Commercial usage rights</li>
+        <li>Travel within 50km of CBD</li>
+      </ul>
+      <a href="#book" class="price-btn">Book this package</a>
+    </div>
+
+    <div class="price-card featured">
+      <span class="price-badge">Most popular</span>
+      <h3>Flyover + Tour</h3>
+      <div class="price-amount">$549</div>
+      <p class="price-note">Per property</p>
+      <ul class="price-features">
+        <li>Everything in Flyover</li>
+        <li>360° virtual tour footage</li>
+        <li>Ground-level walkthrough video</li>
+        <li>Social media cut included</li>
+        <li>Priority 24-hour delivery</li>
+      </ul>
+      <a href="#book" class="price-btn">Book this package</a>
+    </div>
+
+    <div class="price-card">
+      <span class="price-badge">Inspection</span>
+      <h3>Roof & Structure</h3>
+      <div class="price-amount">$299</div>
+      <p class="price-note">Per property</p>
+      <ul class="price-features">
+        <li>Full roof perimeter inspection</li>
+        <li>Guttering & fascia assessment</li>
+        <li>Solar panel condition check</li>
+        <li>Annotated image report</li>
+        <li>Written findings summary</li>
+      </ul>
+      <a href="#book" class="price-btn">Book this package</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section class="booking" id="book">
+  <div class="booking-inner">
+    <div class="booking-info">
+      <p class="section-eyebrow">Get in touch</p>
+      <h2>Book a flight or request a quote</h2>
+      <p>Fill in your details and we'll get back to you within a few hours to confirm availability and answer any questions.</p>
+
+      <div class="contact-detail">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        0400 000 000
+      </div>
+      <div class="contact-detail">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        hello@aeroshot.com.au
+      </div>
+      <div class="contact-detail">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Melbourne & Victoria wide
+      </div>
+    </div>
+
+    <div>
+      <div class="booking-form" id="bookingForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First name</label>
+            <input type="text" class="form-input" placeholder="James" id="f-fname">
+          </div>
+          <div class="form-group">
+            <label>Last name</label>
+            <input type="text" class="form-input" placeholder="Walker" id="f-lname">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-input" placeholder="james@example.com" id="f-email">
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" class="form-input" placeholder="04XX XXX XXX" id="f-phone">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Property address</label>
+          <input type="text" class="form-input" placeholder="123 Example St, Suburb VIC 3000" id="f-address">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Service required</label>
+            <select class="form-select" id="f-service">
+              <option value="">Select a service…</option>
+              <option>Real Estate Flyover — $349</option>
+              <option>Flyover + Virtual Tour — $549</option>
+              <option>Roof & Structure Inspection — $299</option>
+              <option>Progress Documentation</option>
+              <option>Custom / Not sure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Preferred date</label>
+            <input type="date" class="form-input" id="f-date">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Additional notes</label>
+          <textarea class="form-textarea" placeholder="Anything we should know — access instructions, specific features to capture, urgency…" id="f-notes"></textarea>
+        </div>
+        <button class="form-submit" onclick="submitBooking()">Send enquiry</button>
+        <p class="form-note">We typically respond within 2–4 hours on business days.</p>
+      </div>
+      <div class="form-success" id="bookingSuccess">
+        <div style="font-size:28px;margin-bottom:0.5rem;">✓</div>
+        <strong>Enquiry received!</strong><br>
+        We'll be in touch within a few hours to confirm your booking details.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Aeroshot</a>
+  <p>© 2026 Aeroshot Pty Ltd — $20M Public Liability</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#book">Book</a>
+  </div>
+</footer>
+
+<script>
+  function submitBooking() {
+    const fname = document.getElementById('f-fname').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const service = document.getElementById('f-service').value;
+    if (!fname || !email || !service) {
+      alert('Please fill in your name, email, and select a service.');
+      return;
+    }
+    document.getElementById('bookingForm').style.display = 'none';
+    document.getElementById('bookingSuccess').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
